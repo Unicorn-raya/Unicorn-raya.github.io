@@ -20,28 +20,35 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="[大数据学习] Hadoop 简介Hadoop, what?Hadoop 是一个分布式系统基础架构。这篇聊聊他的进化历史，从1.0 到 2.0  Hadoop 1.0Hadoop 1.0 是最早hadoop的版本，主要由两个部分构成，HDFS(存储) + MapReduce(计算) HDFS （存储）hdfs,全称是hadoop distribute file system,如名字所言: 分布式(">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/1970/01/01/1.%20hadoop/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[大数据学习] Hadoop 简介Hadoop, what?Hadoop 是一个分布式系统基础架构。这篇聊聊他的进化历史，从1.0 到 2.0  Hadoop 1.0Hadoop 1.0 是最早hadoop的版本，主要由两个部分构成，HDFS(存储) + MapReduce(计算) HDFS （存储）hdfs,全称是hadoop distribute file system,如名字所言: 分布式(">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/1970/01/01/1.%20hadoop/1_yarn.png">
+<meta property="og:image" content="http://example.com/1970/01/01/1.%20hadoop/1_yarn_work.png">
+<meta property="article:published_time" content="1970-01-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-29T09:15:15.003Z">
 <meta property="article:author" content="ray">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/1970/01/01/1.%20hadoop/1_yarn.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/1970/01/01/1.%20hadoop/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Hexo</title>
+  <title> | Hexo</title>
   
 
 
@@ -139,144 +146,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/28/hello-hexo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ray">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/28/hello-hexo/" class="post-title-link" itemprop="url">hello-hexo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-04-28 15:24:38 / Modified: 15:24:40" itemprop="dateCreated datePublished" datetime="2021-04-28T15:24:38+08:00">2021-04-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ray">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/1970/01/01/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 1970-01-01 08:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T08:00:00+08:00">1970-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-28 15:23:31" itemprop="dateModified" datetime="2021-04-28T15:23:31+08:00">2021-04-28</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -292,10 +165,9 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+        <h1 class="post-title" itemprop="name headline">
           
-            <a href="/1970/01/01/1.%20hadoop/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -325,7 +197,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="大数据学习-Hadoop-简介"><a href="#大数据学习-Hadoop-简介" class="headerlink" title="[大数据学习] Hadoop 简介"></a>[大数据学习] Hadoop 简介</h1><h2 id="Hadoop-what"><a href="#Hadoop-what" class="headerlink" title="Hadoop, what?"></a>Hadoop, what?</h2><p>Hadoop 是一个分布式系统基础架构。这篇聊聊他的进化历史，从1.0 到 2.0 </p>
+        <h1 id="大数据学习-Hadoop-简介"><a href="#大数据学习-Hadoop-简介" class="headerlink" title="[大数据学习] Hadoop 简介"></a>[大数据学习] Hadoop 简介</h1><h2 id="Hadoop-what"><a href="#Hadoop-what" class="headerlink" title="Hadoop, what?"></a>Hadoop, what?</h2><p>Hadoop 是一个分布式系统基础架构。这篇聊聊他的进化历史，从1.0 到 2.0 </p>
 <h2 id="Hadoop-1-0"><a href="#Hadoop-1-0" class="headerlink" title="Hadoop 1.0"></a>Hadoop 1.0</h2><p>Hadoop 1.0 是最早hadoop的版本，主要由两个部分构成，HDFS(存储) + MapReduce(计算)</p>
 <h3 id="HDFS-（存储）"><a href="#HDFS-（存储）" class="headerlink" title="HDFS （存储）"></a>HDFS （存储）</h3><p>hdfs,全称是hadoop distribute file system,如名字所言: 分布式(Distribute)，文件系统(file system)。就是以分布式的形式存储文件。所谓分布式存储，就是将文件分割成若干个小文件，并分散存储在不同服务器上。不过现在大家都用云存储了，hdfs主要是入门基础。不用太深，图一乐。<br>HDFS 的结构主要由 NameNode(metadata) + DataNode(data) 组成。<br>NameNode 是存储元数据的节点，元数据指的是文件的block位置，size 等。 DataNode 是真正存储数据的位置，通常，一个数据会被分割成几分，且每一份数据会复制3份(为什么是3份)来保证数据不会被丢失。在1.0的版本中，namenode同样负责job的调度，等等，这些都在2.0里丢给了yarn。</p>
 <h3 id="MapReduce（计算）"><a href="#MapReduce（计算）" class="headerlink" title="MapReduce（计算）"></a>MapReduce（计算）</h3><p>在hadoop生态里，最早的是mapreduce,再往后，就是spark，以及tez。<br>MapReduce 是一种计算框架。字面意思，就是把计算分为map 和 reduce。 map中，通常是数据的转换。而reduce，更多的是聚合。比如，现在统计一组数据中男生，女生的个数，处理逻辑如下：</p>
@@ -365,21 +237,30 @@
 <p>那么，Yarn是什么<br>Yarn 很像 双层调度器 的结构，但是有一些区别：双层调度的模式是 框架调度器主动的向 中央调度器申请资源，而 Yarn中，资源是由中央(RM) 分配给地方（NM）。不过整体的结构相似。</p>
 <h3 id="Hadoop-中的-HA-mode"><a href="#Hadoop-中的-HA-mode" class="headerlink" title="Hadoop 中的 HA mode"></a>Hadoop 中的 HA mode</h3><p>HA,也就是 High available。一般的hadoop system,结构是由 namenode + datanode组成。 但是，假如，namenode 故障了，整个集群就会无法启动，直到你重启了namenode。那这个时候，HA模式就可以解决这个问题，HA模式在 namenode + datanode 基础上，变成了 namenode（active） + namenode (standby) + datanode. 其中，namenode（active）仍然负责所有的操作，而 namenode (standby) 是作为备份。其中 namenode（active） 和 namenode (standby)为了保证数据一致，会通过一个共享存储系统，比如 zookeeper，来保证一致性。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/1970/01/01/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -432,6 +313,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A0-Hadoop-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">[大数据学习] Hadoop 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-what"><span class="nav-number">1.1.</span> <span class="nav-text">Hadoop, what?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-1-0"><span class="nav-number">1.2.</span> <span class="nav-text">Hadoop 1.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS-%EF%BC%88%E5%AD%98%E5%82%A8%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">HDFS （存储）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapReduce%EF%BC%88%E8%AE%A1%E7%AE%97%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">MapReduce（计算）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop-1-0%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.3.</span> <span class="nav-text">Hadoop 1.0的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-2-0"><span class="nav-number">1.3.</span> <span class="nav-text">Hadoop 2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YARN-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.1.</span> <span class="nav-text">YARN 是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#YARN-%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AA%E4%BD%9C%E4%B8%9A%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">YARN 启动一个作业的流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#YARN-%E7%9A%84%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">YARN 的调度方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop-%E4%B8%AD%E7%9A%84-HA-mode"><span class="nav-number">1.3.2.</span> <span class="nav-text">Hadoop 中的 HA mode</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
