@@ -145,6 +145,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/29/Hadoop-%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/29/Hadoop-%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Hadoop 简介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-29 17:47:13 / Modified: 17:48:05" itemprop="dateCreated datePublished" datetime="2021-04-29T17:47:13+08:00">2021-04-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Hadoop-what"><a href="#Hadoop-what" class="headerlink" title="Hadoop, what?"></a>Hadoop, what?</h2><p>Hadoop 是一个分布式系统基础架构。这篇聊聊他的进化历史，从1.0 到 2.0 </p>
+<h2 id="Hadoop-1-0"><a href="#Hadoop-1-0" class="headerlink" title="Hadoop 1.0"></a>Hadoop 1.0</h2><p>Hadoop 1.0 是最早hadoop的版本，主要由两个部分构成，HDFS(存储) + MapReduce(计算)</p>
+<h3 id="HDFS-（存储）"><a href="#HDFS-（存储）" class="headerlink" title="HDFS （存储）"></a>HDFS （存储）</h3><p>hdfs,全称是hadoop distribute file system,如名字所言: 分布式(Distribute)，文件系统(file system)。就是以分布式的形式存储文件。所谓分布式存储，就是将文件分割成若干个小文件，并分散存储在不同服务器上。不过现在大家都用云存储了，hdfs主要是入门基础。不用太深，图一乐。<br>HDFS 的结构主要由 NameNode(metadata) + DataNode(data) 组成。<br>NameNode 是存储元数据的节点，元数据指的是文件的block位置，size 等。 DataNode 是真正存储数据的位置，通常，一个数据会被分割成几分，且每一份数据会复制3份(为什么是3份)来保证数据不会被丢失。在1.0的版本中，namenode同样负责job的调度，等等，这些都在2.0里丢给了yarn。</p>
+<h3 id="MapReduce（计算）"><a href="#MapReduce（计算）" class="headerlink" title="MapReduce（计算）"></a>MapReduce（计算）</h3><p>在hadoop生态里，最早的是mapreduce,再往后，就是spark，以及tez。<br>MapReduce 是一种计算框架。字面意思，就是把计算分为map 和 reduce。 map中，通常是数据的转换。而reduce，更多的是聚合。比如，现在统计一组数据中男生，女生的个数，处理逻辑如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name1 -&gt; man -&gt; 1</span><br><span class="line">name2 -&gt; women -&gt; 1</span><br><span class="line">name3 -&gt; man -&gt; 1</span><br><span class="line">name4 -&gt; women -&gt; 1</span><br></pre></td></tr></table></figure>
+<p>在这一步，就是map的过程，而将这一步统计在一起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man -&gt; 2</span><br><span class="line">women -&gt; 2</span><br></pre></td></tr></table></figure>
+<p>这就属于reduce的过程。而这种计算过程，也对分布式计算非常友好。因此，在最开始的hadoop 1.0 中，结构就是<br>mapreduce(计算) + hdfs（存储）</p>
+<h3 id="Hadoop-1-0的缺点"><a href="#Hadoop-1-0的缺点" class="headerlink" title="Hadoop 1.0的缺点"></a>Hadoop 1.0的缺点</h3><p>最早开始，hadoop 是 mapreduce + hdfs，已经没人用了。一是这样的计算方式，在极大数据的时候，中间的缓存太大。此外，由于最开始，hadoop的调度方式是顺序结构。也就是FIFO，导致了整个计算过程非常缓慢。而且，整个系统没有热备份(也就是实时备份)，已经无法适应大规模计算了，所以1.0的结构已经被彻底抛弃。</p>
+<h2 id="Hadoop-2-0"><a href="#Hadoop-2-0" class="headerlink" title="Hadoop 2.0"></a>Hadoop 2.0</h2><p>Hadoop 2.0的时候，整个结构变成了 mapreduce(计算) + yarn(资源管理) + hdfs(存储)。此外，在2.0的时候已经支持了spark的计算框架。并且，新加入了HA(high available)模式. </p>
+<h3 id="YARN-是什么"><a href="#YARN-是什么" class="headerlink" title="YARN 是什么"></a>YARN 是什么</h3><p>YARN 的全称是 Yet Another Resource Negotiator. YARN 主要管理两个资源：CPU + Memory, 并且他的结构如下图：<br><img src="/images/1_yarn.png" alt="yarn"><br>其中，资源管理是由 RM(ResourceManager) + AM(ApplicationMaster) + NM(NodeManager) 组成,如上图所示。<br>从图中我们可以看出，yarn是典型的master-slave结构。其中，RM对所有的资源进行调度和管理，而NM会对自己的资源做出隔离和管理。连接NM和RM的就是AM，AM会负责向RM申请资源，并对container中的Aplication进行跟踪和管理。</p>
+<h4 id="YARN-启动一个作业的流程"><a href="#YARN-启动一个作业的流程" class="headerlink" title="YARN 启动一个作业的流程"></a>YARN 启动一个作业的流程</h4><p><img src="/images/1_yarn_work.png" alt="1_yarn_work">   </p>
+<ol>
+<li><p>首先，client 向 RM 提交 application</p>
+</li>
+<li><p>RM 收到后，会让 NM 启动一个container,同时，也会为这个NM启动一个AM。</p>
+</li>
+<li><p>AM 向 RM 注册。</p>
+</li>
+<li><p>AM 用轮询的方式向 RM 中的 resource scheduler要资源</p>
+</li>
+<li><p>AM 在拿到资源后，会联系 NM，请求启动计算任务</p>
+</li>
+<li><p>NM 会根据 AM 拿到的资源，在 container 中启动任务</p>
+</li>
+<li><p>任务会向 AM 汇报自己的 状态 和 进度，以便让AM掌握各个任务的执行状况</p>
+</li>
+<li><p>任务做完之后，AM 会向 RM 提交注销，并关闭自己</p>
+<h4 id="YARN-的调度方式"><a href="#YARN-的调度方式" class="headerlink" title="YARN 的调度方式"></a>YARN 的调度方式</h4><p>从宏观上来说，调度方式又如下三种: 集中式调度器(Monolithic scheduler)，双层调度器(Two-Level Scheduler)，状态共享调度器(Shared-State Scheduler)</p>
+</li>
+<li><p>集中式调度器(Monolithic scheduler)<br>集中式调度器只有一个中央调度器构成。其中，所有的计算资源申请，调度逻辑都会交给中央调度器。这也就直接导致了中央调度器再做高并发的情况下，会出现性能瓶颈。假如此时，有多个资源申请，中央调度器只能顺序执行</p>
+</li>
+<li><p>双层调度器(Two-Level Scheduler)<br>双层调度器(Two-Level Scheduler) 在 集中式 基础上，变为了 中央调度器 + 框架调度器。此时，中央调度器只负责资源的状态，然后按照一定的策略（FIFO, Fair, Capacity, Dominant Resouce Fair）把资源分配给 框架调度器，框架调度器在根据接收到的资源来给容器分配任务。 </p>
+</li>
+<li><p>状态共享调度器（Shared-State Scheduler）<br>状态共享调度器（Shared-State Scheduler，结构同样是 中央调度器 + 框架调度器。但，此时的 中央调度器 只负责保存集群的使用信息，不再去分配资源。而 框架调度器 会根据当前集群的使用信息来去申请资源。一旦 框架调度器 申请完资源，新的资源会更新中央调度器的信息。资源申请若是出现了竞争，会通过 事务 进行，来保证操作的原子性（见数据库中的事务）。这种类似 MVCC的乐观并发机制。缺点是调度公平性不足。</p>
+</li>
+</ol>
+<p>那么，Yarn是什么<br>Yarn 很像 双层调度器 的结构，但是有一些区别：双层调度的模式是 框架调度器主动的向 中央调度器申请资源，而 Yarn中，资源是由中央(RM) 分配给地方（NM）。不过整体的结构相似。</p>
+<h3 id="Hadoop-中的-HA-mode"><a href="#Hadoop-中的-HA-mode" class="headerlink" title="Hadoop 中的 HA mode"></a>Hadoop 中的 HA mode</h3><p>HA,也就是 High available。一般的hadoop system,结构是由 namenode + datanode组成。 但是，假如，namenode 故障了，整个集群就会无法启动，直到你重启了namenode。那这个时候，HA模式就可以解决这个问题，HA模式在 namenode + datanode 基础上，变成了 namenode（active） + namenode (standby) + datanode. 其中，namenode（active）仍然负责所有的操作，而 namenode (standby) 是作为备份。其中 namenode（active） 和 namenode (standby)为了保证数据一致，会通过一个共享存储系统，比如 zookeeper，来保证一致性。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -203,109 +300,6 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/1970/01/01/1.%20hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="ray">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/1970/01/01/1.%20hadoop/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 1970-01-01 08:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T08:00:00+08:00">1970-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-29 17:15:15" itemprop="dateModified" datetime="2021-04-29T17:15:15+08:00">2021-04-29</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="大数据学习-Hadoop-简介"><a href="#大数据学习-Hadoop-简介" class="headerlink" title="[大数据学习] Hadoop 简介"></a>[大数据学习] Hadoop 简介</h1><h2 id="Hadoop-what"><a href="#Hadoop-what" class="headerlink" title="Hadoop, what?"></a>Hadoop, what?</h2><p>Hadoop 是一个分布式系统基础架构。这篇聊聊他的进化历史，从1.0 到 2.0 </p>
-<h2 id="Hadoop-1-0"><a href="#Hadoop-1-0" class="headerlink" title="Hadoop 1.0"></a>Hadoop 1.0</h2><p>Hadoop 1.0 是最早hadoop的版本，主要由两个部分构成，HDFS(存储) + MapReduce(计算)</p>
-<h3 id="HDFS-（存储）"><a href="#HDFS-（存储）" class="headerlink" title="HDFS （存储）"></a>HDFS （存储）</h3><p>hdfs,全称是hadoop distribute file system,如名字所言: 分布式(Distribute)，文件系统(file system)。就是以分布式的形式存储文件。所谓分布式存储，就是将文件分割成若干个小文件，并分散存储在不同服务器上。不过现在大家都用云存储了，hdfs主要是入门基础。不用太深，图一乐。<br>HDFS 的结构主要由 NameNode(metadata) + DataNode(data) 组成。<br>NameNode 是存储元数据的节点，元数据指的是文件的block位置，size 等。 DataNode 是真正存储数据的位置，通常，一个数据会被分割成几分，且每一份数据会复制3份(为什么是3份)来保证数据不会被丢失。在1.0的版本中，namenode同样负责job的调度，等等，这些都在2.0里丢给了yarn。</p>
-<h3 id="MapReduce（计算）"><a href="#MapReduce（计算）" class="headerlink" title="MapReduce（计算）"></a>MapReduce（计算）</h3><p>在hadoop生态里，最早的是mapreduce,再往后，就是spark，以及tez。<br>MapReduce 是一种计算框架。字面意思，就是把计算分为map 和 reduce。 map中，通常是数据的转换。而reduce，更多的是聚合。比如，现在统计一组数据中男生，女生的个数，处理逻辑如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name1 -&gt; man -&gt; 1</span><br><span class="line">name2 -&gt; women -&gt; 1</span><br><span class="line">name3 -&gt; man -&gt; 1</span><br><span class="line">name4 -&gt; women -&gt; 1</span><br></pre></td></tr></table></figure>
-<p>在这一步，就是map的过程，而将这一步统计在一起</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man -&gt; 2</span><br><span class="line">women -&gt; 2</span><br></pre></td></tr></table></figure>
-<p>这就属于reduce的过程。而这种计算过程，也对分布式计算非常友好。因此，在最开始的hadoop 1.0 中，结构就是<br>mapreduce(计算) + hdfs（存储）</p>
-<h3 id="Hadoop-1-0的缺点"><a href="#Hadoop-1-0的缺点" class="headerlink" title="Hadoop 1.0的缺点"></a>Hadoop 1.0的缺点</h3><p>最早开始，hadoop 是 mapreduce + hdfs，已经没人用了。一是这样的计算方式，在极大数据的时候，中间的缓存太大。此外，由于最开始，hadoop的调度方式是顺序结构。也就是FIFO，导致了整个计算过程非常缓慢。而且，整个系统没有热备份(也就是实时备份)，已经无法适应大规模计算了，所以1.0的结构已经被彻底抛弃。</p>
-<h2 id="Hadoop-2-0"><a href="#Hadoop-2-0" class="headerlink" title="Hadoop 2.0"></a>Hadoop 2.0</h2><p>Hadoop 2.0的时候，整个结构变成了 mapreduce(计算) + yarn(资源管理) + hdfs(存储)。此外，在2.0的时候已经支持了spark的计算框架。并且，新加入了HA(high available)模式. </p>
-<h3 id="YARN-是什么"><a href="#YARN-是什么" class="headerlink" title="YARN 是什么"></a>YARN 是什么</h3><p>YARN 的全称是 Yet Another Resource Negotiator. YARN 主要管理两个资源：CPU + Memory, 并且他的结构如下图：<br><img src="1_yarn.png" alt="yarn"><br>其中，资源管理是由 RM(ResourceManager) + AM(ApplicationMaster) + NM(NodeManager) 组成,如上图所示。<br>从图中我们可以看出，yarn是典型的master-slave结构。其中，RM对所有的资源进行调度和管理，而NM会对自己的资源做出隔离和管理。连接NM和RM的就是AM，AM会负责向RM申请资源，并对container中的Aplication进行跟踪和管理。</p>
-<h4 id="YARN-启动一个作业的流程"><a href="#YARN-启动一个作业的流程" class="headerlink" title="YARN 启动一个作业的流程"></a>YARN 启动一个作业的流程</h4><p><img src="1_yarn_work.png" alt="1_yarn_work">   </p>
-<ol>
-<li><p>首先，client 向 RM 提交 application</p>
-</li>
-<li><p>RM 收到后，会让 NM 启动一个container,同时，也会为这个NM启动一个AM。</p>
-</li>
-<li><p>AM 向 RM 注册。</p>
-</li>
-<li><p>AM 用轮询的方式向 RM 中的 resource scheduler要资源</p>
-</li>
-<li><p>AM 在拿到资源后，会联系 NM，请求启动计算任务</p>
-</li>
-<li><p>NM 会根据 AM 拿到的资源，在 container 中启动任务</p>
-</li>
-<li><p>任务会向 AM 汇报自己的 状态 和 进度，以便让AM掌握各个任务的执行状况</p>
-</li>
-<li><p>任务做完之后，AM 会向 RM 提交注销，并关闭自己</p>
-<h4 id="YARN-的调度方式"><a href="#YARN-的调度方式" class="headerlink" title="YARN 的调度方式"></a>YARN 的调度方式</h4><p>从宏观上来说，调度方式又如下三种: 集中式调度器(Monolithic scheduler)，双层调度器(Two-Level Scheduler)，状态共享调度器(Shared-State Scheduler)</p>
-</li>
-<li><p>集中式调度器(Monolithic scheduler)<br>集中式调度器只有一个中央调度器构成。其中，所有的计算资源申请，调度逻辑都会交给中央调度器。这也就直接导致了中央调度器再做高并发的情况下，会出现性能瓶颈。假如此时，有多个资源申请，中央调度器只能顺序执行</p>
-</li>
-<li><p>双层调度器(Two-Level Scheduler)<br>双层调度器(Two-Level Scheduler) 在 集中式 基础上，变为了 中央调度器 + 框架调度器。此时，中央调度器只负责资源的状态，然后按照一定的策略（FIFO, Fair, Capacity, Dominant Resouce Fair）把资源分配给 框架调度器，框架调度器在根据接收到的资源来给容器分配任务。 </p>
-</li>
-<li><p>状态共享调度器（Shared-State Scheduler）<br>状态共享调度器（Shared-State Scheduler，结构同样是 中央调度器 + 框架调度器。但，此时的 中央调度器 只负责保存集群的使用信息，不再去分配资源。而 框架调度器 会根据当前集群的使用信息来去申请资源。一旦 框架调度器 申请完资源，新的资源会更新中央调度器的信息。资源申请若是出现了竞争，会通过 事务 进行，来保证操作的原子性（见数据库中的事务）。这种类似 MVCC的乐观并发机制。缺点是调度公平性不足。</p>
-</li>
-</ol>
-<p>那么，Yarn是什么<br>Yarn 很像 双层调度器 的结构，但是有一些区别：双层调度的模式是 框架调度器主动的向 中央调度器申请资源，而 Yarn中，资源是由中央(RM) 分配给地方（NM）。不过整体的结构相似。</p>
-<h3 id="Hadoop-中的-HA-mode"><a href="#Hadoop-中的-HA-mode" class="headerlink" title="Hadoop 中的 HA mode"></a>Hadoop 中的 HA mode</h3><p>HA,也就是 High available。一般的hadoop system,结构是由 namenode + datanode组成。 但是，假如，namenode 故障了，整个集群就会无法启动，直到你重启了namenode。那这个时候，HA模式就可以解决这个问题，HA模式在 namenode + datanode 基础上，变成了 namenode（active） + namenode (standby) + datanode. 其中，namenode（active）仍然负责所有的操作，而 namenode (standby) 是作为备份。其中 namenode（active） 和 namenode (standby)为了保证数据一致，会通过一个共享存储系统，比如 zookeeper，来保证一致性。</p>
 
       
     </div>
@@ -390,6 +384,10 @@
           <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
