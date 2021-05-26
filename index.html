@@ -145,6 +145,73 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/26/hive-advanced/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/26/hive-advanced/" class="post-title-link" itemprop="url">Hive的高级特性</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-05-26 16:15:21 / Modified: 18:12:34" itemprop="dateCreated datePublished" datetime="2021-05-26T16:15:21+08:00">2021-05-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Hive的高级特性"><a href="#Hive的高级特性" class="headerlink" title="Hive的高级特性"></a>Hive的高级特性</h1><h2 id="Hive-UDF-UDAF-UDTF"><a href="#Hive-UDF-UDAF-UDTF" class="headerlink" title="Hive UDF,UDAF,UDTF"></a>Hive UDF,UDAF,UDTF</h2><p>Hive 的三种自定义function: UDF,UDAF,UDTF.</p>
+<h2 id="Hive-incremental-updates"><a href="#Hive-incremental-updates" class="headerlink" title="Hive incremental updates"></a>Hive incremental updates</h2><h3 id="无事务类型定义之前的Hive"><a href="#无事务类型定义之前的Hive" class="headerlink" title="无事务类型定义之前的Hive"></a>无事务类型定义之前的Hive</h3><p>大数据领域中，大部分的表更新分为两种，full load和incremental update。在rdbms中，这两种操作都可以做到，但是在hive中，由于hive不是非关系型数据库，所以需要一些额外的操作:</p>
+<h3 id="concepts"><a href="#concepts" class="headerlink" title="concepts"></a>concepts</h3><ul>
+<li>master table：internal table,存储主数据</li>
+<li>delta table： external table，里面只有更新的数据，或者需要增加的数据</li>
+<li>reconciliation view: 通过master table和 delta table一起union all得到的结果</li>
+<li>reporting table: snapshot of the reconciliation view. table的数据会随着delta table变化，通常会做一个新表来存数据<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table report_table as select * from reconciliation_view</span><br></pre></td></tr></table></figure>
+<h3 id="New-MERGE-statement-in-Hive-2-2"><a href="#New-MERGE-statement-in-Hive-2-2" class="headerlink" title="New MERGE statement in Hive 2.2"></a>New MERGE statement in Hive 2.2</h3>Hive 2.2之后，支持了merge的操作。但是需要master table支持acid，且局限在orc格式的数据。<h4 id="Hive-ACID-transactions"><a href="#Hive-ACID-transactions" class="headerlink" title="Hive ACID transactions"></a>Hive ACID transactions</h4></li>
+</ul>
+<h2 id="Hive-streaming-API"><a href="#Hive-streaming-API" class="headerlink" title="Hive streaming API"></a>Hive streaming API</h2><h2 id="Hive-explain"><a href="#Hive-explain" class="headerlink" title="Hive explain"></a>Hive explain</h2><h2 id="Hive-statistics"><a href="#Hive-statistics" class="headerlink" title="Hive statistics"></a>Hive statistics</h2><h2 id="Hive-schema-优化"><a href="#Hive-schema-优化" class="headerlink" title="Hive schema 优化"></a>Hive schema 优化</h2><h2 id="Hive-integration"><a href="#Hive-integration" class="headerlink" title="Hive integration"></a>Hive integration</h2><h2 id="Hive-wrapping-up"><a href="#Hive-wrapping-up" class="headerlink" title="Hive wrapping up"></a>Hive wrapping up</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/25/sort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -325,7 +392,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-24 17:53:24" itemprop="dateModified" datetime="2021-05-24T17:53:24+08:00">2021-05-24</time>
+                <time title="Modified: 2021-05-26 16:16:14" itemprop="dateModified" datetime="2021-05-26T16:16:14+08:00">2021-05-26</time>
               </span>
 
           
@@ -444,7 +511,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;,&#39; STORED AS TEXTFILE;
 <li>优化物理执行计划：物理层优化器进行 MapReduce 任务的变换，生成最终的执行计划。</li>
 </ul>
 <p>详细可以看这篇: <a target="_blank" rel="noopener" href="https://tech.meituan.com/2014/02/12/hive-sql-to-mapreduce.html">https://tech.meituan.com/2014/02/12/hive-sql-to-mapreduce.html</a></p>
-<h2 id="HIVE-的-高级特性"><a href="#HIVE-的-高级特性" class="headerlink" title="HIVE 的 高级特性"></a>HIVE 的 高级特性</h2><h3 id="Hive-incremental-updates"><a href="#Hive-incremental-updates" class="headerlink" title="Hive incremental updates"></a>Hive incremental updates</h3><h3 id="Hive-ACID-transactions"><a href="#Hive-ACID-transactions" class="headerlink" title="Hive ACID transactions"></a>Hive ACID transactions</h3><h3 id="Hive-streaming-API"><a href="#Hive-streaming-API" class="headerlink" title="Hive streaming API"></a>Hive streaming API</h3><h3 id="Hive-explain"><a href="#Hive-explain" class="headerlink" title="Hive explain"></a>Hive explain</h3><h3 id="Hive-statistics"><a href="#Hive-statistics" class="headerlink" title="Hive statistics"></a>Hive statistics</h3><h3 id="Hive-schema-优化"><a href="#Hive-schema-优化" class="headerlink" title="Hive schema 优化"></a>Hive schema 优化</h3><h3 id="Hive-integration"><a href="#Hive-integration" class="headerlink" title="Hive integration"></a>Hive integration</h3><h3 id="Hive-wrapping-up"><a href="#Hive-wrapping-up" class="headerlink" title="Hive wrapping up"></a>Hive wrapping up</h3>
+
       
     </div>
 
@@ -1290,7 +1357,7 @@ api: java,c, web rest
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
