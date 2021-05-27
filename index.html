@@ -168,10 +168,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-05-26 16:15:21 / Modified: 18:12:34" itemprop="dateCreated datePublished" datetime="2021-05-26T16:15:21+08:00">2021-05-26</time>
+              <time title="Created: 2021-05-26 16:15:21" itemprop="dateCreated datePublished" datetime="2021-05-26T16:15:21+08:00">2021-05-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-27 17:44:26" itemprop="dateModified" datetime="2021-05-27T17:44:26+08:00">2021-05-27</time>
+              </span>
 
           
 
@@ -184,16 +190,64 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Hive的高级特性"><a href="#Hive的高级特性" class="headerlink" title="Hive的高级特性"></a>Hive的高级特性</h1><h2 id="Hive-UDF-UDAF-UDTF"><a href="#Hive-UDF-UDAF-UDTF" class="headerlink" title="Hive UDF,UDAF,UDTF"></a>Hive UDF,UDAF,UDTF</h2><p>Hive 的三种自定义function: UDF,UDAF,UDTF.</p>
+          <h1 id="Hive的高级特性"><a href="#Hive的高级特性" class="headerlink" title="Hive的高级特性"></a>Hive的高级特性</h1><h2 id="Hive-UDF-UDAF-UDTF"><a href="#Hive-UDF-UDAF-UDTF" class="headerlink" title="Hive UDF,UDAF,UDTF"></a>Hive UDF,UDAF,UDTF</h2><p>Hive 的三种自定义function: UDF,UDAF,UDTF。详细见<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010376788/article/details/50532166">链接</a></p>
 <h2 id="Hive-incremental-updates"><a href="#Hive-incremental-updates" class="headerlink" title="Hive incremental updates"></a>Hive incremental updates</h2><h3 id="无事务类型定义之前的Hive"><a href="#无事务类型定义之前的Hive" class="headerlink" title="无事务类型定义之前的Hive"></a>无事务类型定义之前的Hive</h3><p>大数据领域中，大部分的表更新分为两种，full load和incremental update。在rdbms中，这两种操作都可以做到，但是在hive中，由于hive不是非关系型数据库，所以需要一些额外的操作:</p>
 <h3 id="concepts"><a href="#concepts" class="headerlink" title="concepts"></a>concepts</h3><ul>
 <li>master table：internal table,存储主数据</li>
 <li>delta table： external table，里面只有更新的数据，或者需要增加的数据</li>
 <li>reconciliation view: 通过master table和 delta table一起union all得到的结果</li>
 <li>reporting table: snapshot of the reconciliation view. table的数据会随着delta table变化，通常会做一个新表来存数据<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table report_table as select * from reconciliation_view</span><br></pre></td></tr></table></figure>
-<h3 id="New-MERGE-statement-in-Hive-2-2"><a href="#New-MERGE-statement-in-Hive-2-2" class="headerlink" title="New MERGE statement in Hive 2.2"></a>New MERGE statement in Hive 2.2</h3>Hive 2.2之后，支持了merge的操作。但是需要master table支持acid，且局限在orc格式的数据。<h4 id="Hive-ACID-transactions"><a href="#Hive-ACID-transactions" class="headerlink" title="Hive ACID transactions"></a>Hive ACID transactions</h4></li>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3>分两种情况： master table 存在和不存在:<br>假如master table 不存在, 就需要：</li>
+<li>把数据导入到hdfs</li>
+<li>做一个internal master table</li>
+<li>搞定，这样就有master table了</li>
 </ul>
-<h2 id="Hive-streaming-API"><a href="#Hive-streaming-API" class="headerlink" title="Hive streaming API"></a>Hive streaming API</h2><h2 id="Hive-explain"><a href="#Hive-explain" class="headerlink" title="Hive explain"></a>Hive explain</h2><h2 id="Hive-statistics"><a href="#Hive-statistics" class="headerlink" title="Hive statistics"></a>Hive statistics</h2><h2 id="Hive-schema-优化"><a href="#Hive-schema-优化" class="headerlink" title="Hive schema 优化"></a>Hive schema 优化</h2><h2 id="Hive-integration"><a href="#Hive-integration" class="headerlink" title="Hive integration"></a>Hive integration</h2><h2 id="Hive-wrapping-up"><a href="#Hive-wrapping-up" class="headerlink" title="Hive wrapping up"></a>Hive wrapping up</h2>
+<p>当master table存在时:</p>
+<ul>
+<li>先导入updated data 到 hdfs (new data)</li>
+<li>hive 上建立一个external dalta table，路径指向new data的路径</li>
+<li>建立一个 reconciliation view， 数据是 union master table 和 delta table的结果</li>
+<li>删除掉detla table的hdfs上的数据</li>
+<li>重建一个master table(purge)，然后从report table 导入数据</li>
+</ul>
+<p>一例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">select delta_1.* from </span><br><span class="line">(</span><br><span class="line">    select * from master_table</span><br><span class="line">    union</span><br><span class="line">    select * from delta_table</span><br><span class="line">) delta_1</span><br><span class="line">join </span><br><span class="line">(</span><br><span class="line">    select id,max(timestamp) as max_timestamp</span><br><span class="line">    from (</span><br><span class="line">        select * from master_table</span><br><span class="line">        union</span><br><span class="line">        select * from delta_table</span><br><span class="line">    )group by id</span><br><span class="line">)delta_2</span><br><span class="line">on delta_1.id &#x3D; delta_2.id and delta_1.timestamp &#x3D; delta2.max_timestamp</span><br><span class="line">and delta_1.delete_data is null</span><br></pre></td></tr></table></figure>
+<h3 id="New-MERGE-statement-in-Hive-2-2"><a href="#New-MERGE-statement-in-Hive-2-2" class="headerlink" title="New MERGE statement in Hive 2.2"></a>New MERGE statement in Hive 2.2</h3><p>Hive 2.2之后，支持了merge的操作。但是需要master table 是 transactional.merge 的写法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">merge into master</span><br><span class="line"> using delta on master.id &#x3D; delta.id</span><br><span class="line"> when matched then update set</span><br><span class="line">   country&#x3D;delta.country,</span><br><span class="line">   state&#x3D;delta.state</span><br><span class="line">when matched and delete_date is not NULL then delete</span><br><span class="line">when not matched then insert</span><br><span class="line">   values(delta.id, delta.country, delta.state);</span><br></pre></td></tr></table></figure>
+<p>这里，hive支持acid操作，但是update,delete,merge都只能在transactional table上有效</p>
+<h4 id="Hive-ACID-事务表-transactions"><a href="#Hive-ACID-事务表-transactions" class="headerlink" title="Hive ACID 事务表(transactions)"></a>Hive ACID 事务表(transactions)</h4><p>限制:    </p>
+<ul>
+<li>需要全局支持</li>
+<li>需要设置属性: tblproperties(“transactional”=“true”)</li>
+<li>bucketed(分桶，但是不一定要分区), internal table（Hive 管理）</li>
+<li>数据是orc 格式   </li>
+</ul>
+<p>一例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE transactional_table (id int, username string)</span><br><span class="line">PARTITIONED BY (timestamp_date date)</span><br><span class="line">CLUSTERED BY(username) INTO 3 BUCKETS</span><br><span class="line">STORED AS ORC TBLPROPERTIES (&#39;transactional&#39;&#x3D;&#39;true&#39;);</span><br></pre></td></tr></table></figure>
+<p>一旦确定了hive表是tranaction类型，就无法再更改。且表不支持BEGIN,COMMIT,ROLLBACK语句。默认自动abort，或者手动abort.<br>并发属于乐观并发，先commit先win.<br>尽量用大规模数据更新，小规模数据可以用hive stream api.<br>由于HDFS不支持修改源文件，所以hive更新时候，会创建delta table，为了让增量文件尽量小，这里会有一个压缩的过程。定期合并增量文件，以及基础文件</p>
+<h4 id="Hive-ACID-transactions-design"><a href="#Hive-ACID-transactions-design" class="headerlink" title="Hive ACID transactions design"></a>Hive ACID transactions design</h4><p>hive中的事务表过程一共有四个组件:</p>
+<ul>
+<li>Base file：表数据的主文件  </li>
+<li>Delta files: 0或者多个delta file，在transaction过程(update,deleta)中创建</li>
+<li>Compactor: 主要用来减少delta file。</li>
+<li>Transaction/Lock manager: 管理hive metastore 中的事务锁，事务和锁用来恢复失败transaction。transaction manager能保证open,commit,abort的状态。lock manager来保证事务表的必要的locks</li>
+</ul>
+<p>Delta 文件的压缩:<br>Compactor是一个在Hive Metastore上运行的一系列后台线程，主要包括Initiator, Worker, Cleaner, AcidHouseKeeperService 以及一些其他的组件。</p>
+<ul>
+<li>minor 压缩：将多个delta文件合并成一个delta文件 （维度是分桶级别）</li>
+<li>major 压缩：将多个delta文件和base文件合并成一个新的base文件 （维度是分桶级别）</li>
+</ul>
+<p>用来监控事务的几个command：</p>
+<ul>
+<li>SHOW TRANSACTIONS </li>
+<li>ABORT TRANSACTIONS </li>
+<li>SHOW LOCKS </li>
+<li>SHOW COMPACTIONS </li>
+</ul>
+<p>更加详细的看: <a target="_blank" rel="noopener" href="http://shzhangji.com/cnblogs/2019/06/11/understanding-hive-acid-transactional-table/">深入理解 Hive ACID 事务表</a> 以及 <a target="_blank" rel="noopener" href="https://blog.csdn.net/DataIntel_XiAn/article/details/102780436">Hive Merge详解</a></p>
+<h2 id="Hive-streaming-API"><a href="#Hive-streaming-API" class="headerlink" title="Hive streaming API"></a>Hive streaming API</h2><p>更多应用看<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/777720">这篇</a></p>
+<h2 id="Hive-statistics"><a href="#Hive-statistics" class="headerlink" title="Hive statistics"></a>Hive statistics</h2><p>见<a target="_blank" rel="noopener" href="https://www.docs4dev.com/docs/zh/apache-hive/3.1.1/reference/StatsDev.html">文档</a></p>
+
       
     </div>
 
